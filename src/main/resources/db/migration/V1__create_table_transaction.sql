@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS "transaction"."transaction" (
+CREATE TABLE IF NOT EXISTS `transaction` (
 
     `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `description` VARCHAR(50),

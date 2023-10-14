@@ -1,10 +1,9 @@
 package com.wex.transaction_management.service;
 
-import com.wex.transaction_management.dto.request.TransactionRequestDTO;
-import com.wex.transaction_management.dto.response.TransactionResponseDTO;
+import com.wex.transaction_management.model.Transaction;
 
 public interface TransactionService {
 
-    TransactionResponseDTO saveTransaction(TransactionRequestDTO request);
+    Transaction getTransaction(Integer id);
 
 }
