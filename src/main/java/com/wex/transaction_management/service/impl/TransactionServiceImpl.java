@@ -1,6 +1,8 @@
 package com.wex.transaction_management.service.impl;
 
 import com.wex.transaction_management.dto.request.TransactionRequestDTO;
+import com.wex.transaction_management.exception.ErrorMessageEnum;
+import com.wex.transaction_management.exception.TransactionException;
 import com.wex.transaction_management.model.Transaction;
 import com.wex.transaction_management.repository.TransactionRepository;
 import com.wex.transaction_management.service.TransactionService;
@@ -32,6 +34,9 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public Transaction saveTransaction(TransactionRequestDTO request) {
+        if(request.getDescription().length() > 50){
+            throw new TransactionException(ErrorMessageEnum.SIZE_VALIDATION_ERROR);
+        }
         Transaction transaction = Transaction.builder()
                 .description(request.getDescription())
                 .transactionDate(LocalDate.parse(request.getTransactionDate()))
