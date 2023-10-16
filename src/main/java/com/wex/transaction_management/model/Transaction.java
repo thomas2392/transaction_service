@@ -9,9 +9,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 
 @AllArgsConstructor
@@ -21,12 +22,13 @@ import java.time.LocalDateTime;
 @Builder
 public class Transaction implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String description;
-    private LocalDateTime transactionDate;
+    private LocalDate transactionDate;
     private BigDecimal purchasedAmount;
 }
