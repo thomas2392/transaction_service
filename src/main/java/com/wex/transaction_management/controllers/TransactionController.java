@@ -31,7 +31,7 @@ public class TransactionController {
     }
 
     @PostMapping
-    public ResponseEntity<Transaction> saveNewTransaction(@RequestBody @Valid TransactionRequestDTO requestDTO){
+    public ResponseEntity<Transaction> saveNewTransaction(@RequestBody @Valid TransactionRequestDTO requestDTO) throws Exception{
         Transaction transaction = transactionService.saveTransaction(requestDTO);
         return ResponseEntity.ok(transaction);
     }

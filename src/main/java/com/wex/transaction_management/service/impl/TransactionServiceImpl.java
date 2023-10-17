@@ -28,8 +28,7 @@ public class TransactionServiceImpl implements TransactionService {
         log.info("Accessing database to get value of transaction. [transactionId={}]", id);
         Optional<Transaction> transaction = repository.findById(id);
         if(!transaction.isPresent()){
-            log.info("Not transaction found. [transaction_id={}", id);
-            return null;
+            throw new TransactionException(ErrorMessageEnum.TRANSACTION_NOT_FOUND);
         }
         return transaction.get();
 
@@ -43,13 +42,16 @@ public class TransactionServiceImpl implements TransactionService {
         if(request.getPurchasedAmount().compareTo(BigDecimal.ZERO) <= 0){
             throw new TransactionException(ErrorMessageEnum.INVALID_VALUE);
         }
+        log.info("Accessing database to save transaction. [transaction={}]", request);
         try {
             Transaction transaction = Transaction.builder()
                     .description(request.getDescription())
                     .transactionDate(LocalDate.parse(request.getTransactionDate()))
                     .purchasedAmount(request.getPurchasedAmount().setScale(2, RoundingMode.HALF_UP))
                     .build();
-            return repository.save(transaction);
+            transaction = repository.save(transaction);
+            log.info("Transaction saved successfully.");
+            return transaction;
         } catch(DateTimeParseException e){
             throw new TransactionException(ErrorMessageEnum.INVALID_DATE_FORMAT);
         }
