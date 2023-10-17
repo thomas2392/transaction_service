@@ -10,7 +10,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.Optional;
 
 @Service
@@ -37,11 +40,18 @@ public class TransactionServiceImpl implements TransactionService {
         if(request.getDescription().length() > 50){
             throw new TransactionException(ErrorMessageEnum.SIZE_VALIDATION_ERROR);
         }
-        Transaction transaction = Transaction.builder()
-                .description(request.getDescription())
-                .transactionDate(LocalDate.parse(request.getTransactionDate()))
-                .purchasedAmount(request.getPurchasedAmount())
-                .build();
-        return repository.save(transaction);
+        if(request.getPurchasedAmount().compareTo(BigDecimal.ZERO) <= 0){
+            throw new TransactionException(ErrorMessageEnum.INVALID_VALUE);
+        }
+        try {
+            Transaction transaction = Transaction.builder()
+                    .description(request.getDescription())
+                    .transactionDate(LocalDate.parse(request.getTransactionDate()))
+                    .purchasedAmount(request.getPurchasedAmount().setScale(2, RoundingMode.HALF_UP))
+                    .build();
+            return repository.save(transaction);
+        } catch(DateTimeParseException e){
+            throw new TransactionException(ErrorMessageEnum.INVALID_DATE_FORMAT);
+        }
     }
 }

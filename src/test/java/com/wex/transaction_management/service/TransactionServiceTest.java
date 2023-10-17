@@ -10,6 +10,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.math.BigDecimal;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -25,6 +27,28 @@ public class TransactionServiceTest {
         TransactionRequestDTO transactionRequestDTO = TransactionCreator.createTransactionRequestDTO();
         String longCharacters = "123456789012345678901234567890123456789012345678901";
         transactionRequestDTO.setDescription(longCharacters);
+        TransactionException transactionException = assertThrows(
+                TransactionException.class, () -> transactionService.saveTransaction(transactionRequestDTO));
+        String result = transactionException.getDescription();
+        assertEquals(expectedResult, result);
+    }
+
+    @Test
+    public void testWhenInvalidDateFormatOnSaveShouldThrowException(){
+        String expectedResult = ErrorMessageEnum.INVALID_DATE_FORMAT.getDescription();
+        TransactionRequestDTO transactionRequestDTO = TransactionCreator.createTransactionRequestDTO();
+        transactionRequestDTO.setTransactionDate("01/01/1900");
+        TransactionException transactionException = assertThrows(
+                TransactionException.class, () -> transactionService.saveTransaction(transactionRequestDTO));
+        String result = transactionException.getDescription();
+        assertEquals(expectedResult, result);
+    }
+
+    @Test
+    public void testWhenInvalidValueOnSaveShouldThrowException(){
+        String expectedResult = ErrorMessageEnum.INVALID_VALUE.getDescription();
+        TransactionRequestDTO transactionRequestDTO = TransactionCreator.createTransactionRequestDTO();
+        transactionRequestDTO.setPurchasedAmount(BigDecimal.ZERO);
         TransactionException transactionException = assertThrows(
                 TransactionException.class, () -> transactionService.saveTransaction(transactionRequestDTO));
         String result = transactionException.getDescription();
