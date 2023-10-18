@@ -3,6 +3,8 @@ package com.wex.transaction_management.service.impl;
 import com.wex.transaction_management.dto.response.ExchangeDataResponseDTO;
 import com.wex.transaction_management.dto.response.ExchangeFiscalResponseDTO;
 import com.wex.transaction_management.dto.response.ExchangeResponseDTO;
+import com.wex.transaction_management.exception.ErrorMessageEnum;
+import com.wex.transaction_management.exception.TransactionException;
 import com.wex.transaction_management.integration.fiscalData.FiscalDataClient;
 import com.wex.transaction_management.model.Transaction;
 import com.wex.transaction_management.service.ExchangeService;
@@ -15,6 +17,7 @@ import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -61,14 +64,13 @@ public class ExchangeServiceImpl implements ExchangeService {
     }
 
     private ExchangeFiscalResponseDTO getExchangeFromLastSixMonths(ExchangeDataResponseDTO fiscalResponse, LocalDate transactionDate){
-        ExchangeFiscalResponseDTO result = null;
         LocalDate lastSixMonths = transactionDate.minusMonths(6);
-        for(ExchangeFiscalResponseDTO exchangeResponse : fiscalResponse.getData()){
-            LocalDate recordDate = exchangeResponse.getRecord_date();
-            if(result == null || (recordDate.isAfter(lastSixMonths) && result.getRecord_date().isBefore(recordDate))){
-                result = exchangeResponse;
-            }
+        Optional<ExchangeFiscalResponseDTO> optional = fiscalResponse.getData().stream()
+                .filter(exchangeResponse -> exchangeResponse.getRecord_date().isAfter(lastSixMonths))
+                .findFirst();
+        if(optional.isEmpty()){
+            throw new TransactionException(ErrorMessageEnum.EXCHANGE_NOT_FOUND);
         }
-        return result;
+        return optional.get();
     }
 }
