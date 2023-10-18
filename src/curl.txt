@@ -1,0 +1,16 @@
+-----Get Transaction
+curl --location 'http://localhost:8080/transaction/1'
+
+-----Save Transaction
+curl --location 'http://localhost:8080/transaction' \
+--header 'Content-Type: application/json' \
+--data '{
+    "description": "12345678901",
+    "transactionDate": "2007-12-03",
+    "purchasedAmount": 100
+}'
+
+-----Get Exchange Rate Using API
+curl --location --request GET 'http://localhost:8080/exchange/1' \
+--header 'Content-Type: text/plain' \
+--data 'Brazil-Real'
