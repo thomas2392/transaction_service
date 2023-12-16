@@ -4,7 +4,7 @@ import com.wex.transaction_management.commons.TransactionCreator;
 import com.wex.transaction_management.dto.request.TransactionRequestDTO;
 import com.wex.transaction_management.exception.ErrorMessageEnum;
 import com.wex.transaction_management.exception.TransactionException;
-import com.wex.transaction_management.model.Transaction;
+import com.wex.transaction_management.model.impl.Transaction;
 import com.wex.transaction_management.repository.TransactionRepository;
 import com.wex.transaction_management.service.impl.TransactionServiceImpl;
 import org.junit.jupiter.api.Test;

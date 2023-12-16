@@ -1,7 +1,7 @@
 package com.wex.transaction_management.controllers;
 
 import com.wex.transaction_management.dto.request.TransactionRequestDTO;
-import com.wex.transaction_management.model.Transaction;
+import com.wex.transaction_management.model.impl.Transaction;
 import com.wex.transaction_management.service.TransactionService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

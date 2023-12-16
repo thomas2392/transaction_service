@@ -6,7 +6,7 @@ import com.wex.transaction_management.dto.response.ExchangeResponseDTO;
 import com.wex.transaction_management.exception.ErrorMessageEnum;
 import com.wex.transaction_management.exception.TransactionException;
 import com.wex.transaction_management.integration.fiscalData.FiscalDataClient;
-import com.wex.transaction_management.model.Transaction;
+import com.wex.transaction_management.model.impl.Transaction;
 import com.wex.transaction_management.service.ExchangeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

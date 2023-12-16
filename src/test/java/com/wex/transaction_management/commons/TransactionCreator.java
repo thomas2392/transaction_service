@@ -1,20 +1,20 @@
 package com.wex.transaction_management.commons;
 
 import com.wex.transaction_management.dto.request.TransactionRequestDTO;
-import com.wex.transaction_management.model.Transaction;
+import com.wex.transaction_management.model.impl.Transaction;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class TransactionCreator {
 
-    public static Transaction createTransaction(){
-        return Transaction.builder()
-                .id(1)
-                .description("Test Transaction")
-                .purchasedAmount(BigDecimal.valueOf(100))
-                .transactionDate(LocalDate.now())
-                .build();
+    public static Transaction createTransaction() {
+        Integer id = 1;
+        String description = "Test Transaction";
+        BigDecimal amount = BigDecimal.valueOf(100);
+        LocalDate date = LocalDate.now();
+
+        return new Transaction(id, description, date, amount);
     }
 
     public static TransactionRequestDTO createTransactionRequestDTO(){
