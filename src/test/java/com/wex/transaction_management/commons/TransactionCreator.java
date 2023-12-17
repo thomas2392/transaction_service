@@ -18,10 +18,10 @@ public class TransactionCreator {
     }
 
     public static TransactionRequestDTO createTransactionRequestDTO(){
-        return TransactionRequestDTO.builder()
-                .description("Test Transaction")
-                .purchasedAmount(BigDecimal.valueOf(100))
-                .transactionDate("2023-10-16")
-                .build();
+        String description = "Test Transaction";
+        BigDecimal purchasedAmount = BigDecimal.valueOf(100);
+        String transactionDate = "2023-10-16";
+
+        return new TransactionRequestDTO(description, transactionDate, purchasedAmount);
     }
 }
