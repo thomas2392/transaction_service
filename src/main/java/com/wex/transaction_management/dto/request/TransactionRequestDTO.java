@@ -11,7 +11,7 @@ public class TransactionRequestDTO {
     @NotNull(message = "Please inform a description for the transaction.")
     private String description;
     private String transactionDate;
-    @NotNull(message = "Please inform a value for the transaction")
+    @NotNull(message = "Please inform a value for the transaction.")
     private BigDecimal purchasedAmount;
 
     public TransactionRequestDTO() {}
