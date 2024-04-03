@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.wex</groupId>
-	<artifactId>transaction_management</artifactId>
+	<artifactId>java_study</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>transaction_management</name>
 	<description>Transaction Management API</description>
@@ -53,12 +53,6 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
 			<version>4.0.4</version>
-		</dependency>
-		<!-- lombok -->
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<optional>true</optional>
 		</dependency>
 	</dependencies>
 
